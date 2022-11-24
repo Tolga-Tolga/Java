@@ -11,20 +11,15 @@ public class AbsoluteMax {
      * @return The absolute max value
      */
     public static int getMaxValue(int... numbers) {
+        if (numbers == null) throw new IllegalArgumentException("Array has to be initialized!");
+        
         if (numbers.length == 0) {
             throw new IllegalArgumentException("Numbers array cannot be empty");
         }
-
-        var absMaxWrapper = new Object() {
-            int value = numbers[0];
-        };
-
-        Arrays
-            .stream(numbers)
-            .skip(1)
-            .filter(number -> Math.abs(number) > Math.abs(absMaxWrapper.value))
-            .forEach(number -> absMaxWrapper.value = number);
-
-        return absMaxWrapper.value;
+        
+        int min = Arrays.stream(numbers).min().getAsInt();
+        int max = Arrays.stream(numbers).max().getAsInt();
+        
+        return max > -(min) ? max : min;
     }
 }
